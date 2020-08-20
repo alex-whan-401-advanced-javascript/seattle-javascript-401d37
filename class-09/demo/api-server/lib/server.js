@@ -8,7 +8,7 @@ const notFoundHandler = require("../middleware/404.js");
 
 // Custom Routes // This is different
 const apiRouter = require("../routes/v1.js");
-const paramsRouter = require("../routes/params.js");
+const paramsRouter = require("../routes/params.js"); // PARAMS.JS LEADS HERE - for reference/review only - not needed in our lab!!
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Actual Routes
 app.use(apiRouter);
-app.use(paramsRouter);
+app.use(paramsRouter); // params router will run AFTER the API router, but above the catch-alls/error handler
 
 app.use("*", notFoundHandler);
 app.use(errorHandler);
