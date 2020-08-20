@@ -86,6 +86,8 @@ router.post("/api/v1/:model", handlePost);
 router.get("/api/v1/:model/:id", handleGetOne);
 
 // Route Handlers
+// This is a very common way of returning Data (have an OBJECT that has a COUNT and a RESULTS)
+// Probably SECOND most common (most common is just "the results" - think a full list of objects?)
 function handleGetAll(req, res, next) {
     req.model
         .get()
@@ -96,12 +98,21 @@ function handleGetAll(req, res, next) {
         .catch(next);
 }
 
+// Inspects ID
+// Calls req.model.get WITH that ID
+// But what is REQ.MODEL?: We built the mode already that we're referring to. It's an INSTANCE of a SUB-CLASS of MODEL/DATAMODEL.
+// Because it's a sub-class - it'll be "product", "food", or "books", etc
+// So, it'll be a particular model: Food, Products, Books, etc
+// Important - because, when we call GET on them, it'll be FETCHING them from DIFFERENT COLLECTIONS
 function handleGetOne(req, res, next) {
     let id = req.params.id;
     req.model
         .get(id)
         .then((record) => res.json(record))
-        .catch(next);
+        .catch(next); // normally we'd call next like "next()" - in our middlewares, we're very explicitly calling it RIGHT THEN and there. Some middlewares along the line will send a response - and when we send a response (i.e. res.json() or res.send()) - this catch will feed an ERROR into "next" - alot going on there
+    // MEans: When the .catch happens, the async promise was NOT resolved successfully. CATCH wants a function to run when this error occurs. So, we PASS it a function (we don't CALL it). "If and only if something goes wrong here, and only then, "next" is the function I want you to execute"
+    // Check out the "default" case on the switch statement - where "next" is passed something - NEXT will consider that an error, at which point it'll jump to the ERROR HANDLER elsewhere - and the error Handler has 4 arguments (1st arg is "error" then req, res, next)
+    // Remember: res.json() is like a "convenience method" for sending JSON - it's like "res.send()" but for JSON specifically
 }
 
 function handlePost(req, res, next) {
