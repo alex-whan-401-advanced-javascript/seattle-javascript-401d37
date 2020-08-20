@@ -6,20 +6,22 @@ const DataModel = require("./model.js"); // require a data model
 // REMEMBER: The DATA MODEL is the SUPERCLASS that's going to provide the INTERFACE (the generic "model"/collection/mongo)
 
 // May not even need anything else here - everything we need is already up in the Superclass (and don't have to do super() because we're not adding anything)
-// Implicitly - this is like calling super()
-class Products extends DataModel {
-    // If you want POST to be different than the DEFAULT BEHAVIOR of a DATA MODEL (aka the Superclass) - then you can just "jump in front" and change it up - like below
-    // If a POST doesn't exist, it'll jump up to the next class it's defined in
+class Products extends DataModel {}
 
-    // Explanation example: Products has a rule that name must be lower case.
-    post(record) {
-      // This is JUST checking to see if it has a name and making it lowercase if so - basically saying: apply this rule ONLY to PRODUCTS - and everything else will still happen that would've happened
-        if (record.name) {
-            record.name = record.name.toLowerCase();
-        }
-        // After this point, the superclass POST will do whatever it would've done as if nothing had happened
-        return this.post(record);
-    }
+// Implicitly - this is like calling super()
+// class Products extends DataModel {
+//     // If you want POST to be different than the DEFAULT BEHAVIOR of a DATA MODEL (aka the Superclass) - then you can just "jump in front" and change it up - like below
+//     // If a POST doesn't exist, it'll jump up to the next class it's defined in
+
+//     // Explanation example: Products has a rule that name must be lower case.
+//     post(record) {
+//       // This is JUST checking to see if it has a name and making it lowercase if so - basically saying: apply this rule ONLY to PRODUCTS - and everything else will still happen that would've happened
+//         if (record.name) {
+//             record.name = record.name.toLowerCase();
+//         }
+//         // After this point, the superclass POST will do whatever it would've done as if nothing had happened
+//         return this.post(record);
+//     }
 
 // Pass schema into a NEW INSTANCE OF THIS CLASS
 // Exports a new INSTANCE of this class - not the class itself

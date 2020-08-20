@@ -11,11 +11,22 @@ const books = require("../models/books.js");
 // Let the class lead the "how" discussion and land on a simplistic solution like this one
 // Lab will be for them to make this 100% dynamic and safe
 function getModel(req, res, next) {
+    // This is like saying: Find out what model we're on by looking at the URL - checking for the thing that's in the URL like /api/v1/:model = /api/v1/food
+    // FOOD will be the VALUE that fills out that MODEL "PARAMETER"
+
     let model = req.params.model; // This will be food, books, whatever is after /api/v1
+    // NOTE the difference between "req.params.model" and "req.model"
 
     // How can we get the right model into those functions?
     // Well,l middleware is really good at letting us put data on the request object
     // Lets do that and then get get ourselves back into the route handler
+
+    // We want code that inspects the model, and figures out which one it is
+    // getModel looks at the params - the way we can figure it out is pretty simple: just a quick switch case
+    // Just like: if it's "food", give us the "food model"
+    // NOTE the difference between "req.params.model" and "req.model"
+    // Adding a key/value to the reqest - basically, we're ASSOCIATING a string called 'food' with a MODEL called FOOD
+    // This is how we can use the whole 'router.param' thingy - it'll insert this param
     switch (model) {
         case "food":
             req.model = food;
@@ -31,6 +42,7 @@ function getModel(req, res, next) {
     }
 }
 
+// This is saying like: EVERY ROUTE - listen up! Any route that's using a ":model", I want you to NOTICE that. When you notice it, run the getModel Middleware function - so you end up with the correct MODEL you want ON THE REQUEST.
 router.param("model", getModel);
 
 // OLD WAY: Would be having these routes for BOTH food and books - i.e. category/products - but we could do it in one
@@ -65,6 +77,8 @@ router.param("model", getModel);
 //   })
 //   .catch(next);
 // }
+
+// Now we can use these with the correct MODEL connected to the REQUEST - as we have a req.model that's the correct one - from the Route Handlers above:
 
 // Route Definitions
 router.get("/api/v1/:model", handleGetAll);
