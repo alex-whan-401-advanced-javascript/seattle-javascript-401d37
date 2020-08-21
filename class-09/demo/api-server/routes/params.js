@@ -11,12 +11,12 @@ function getZip(req, res, next) {
         .padStart(5, 0);
     next();
 }
+
 router.param("city", getZip); // what does this mean?
 // getZip will PROBABLY change this
 // What kind of URLS will TRIGGER getZip to run?
 // answer: ANYTHING RELATED TO "CITY"
 // important note - the string "city" won't do it - needs to be the "colon / :city"
-
 // MAIN REQUIREMENT: Have a :city somewhere in the URL
 // TRIGGERED WHEN :CITY is FOUND IN URL (and REACHED)
 
@@ -43,3 +43,4 @@ router.get("/flights/to/:airport", function (req, res, next) {
 module.exports = router;
 
 // MIDDLEWARE: "pretty much everything in Express is middleware"
+module.exports = router;

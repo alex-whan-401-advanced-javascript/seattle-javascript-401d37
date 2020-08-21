@@ -44,5 +44,4 @@ class DataModel {
 // This is pretty unlikely to break - and if it does, you only have to go through 25-50 lines of code instead of like 500
 // Probably will work for like 99% of models
 // BOTTOM LINE: Really hinges on whatever the SCHEMA is - let's look
-
 module.exports = DataModel;

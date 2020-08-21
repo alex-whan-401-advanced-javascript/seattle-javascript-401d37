@@ -36,3 +36,6 @@ module.exports = new Products(schema);
 
 // Can add a "POST" to Products that will step in front of the "Superclass"
 // Make sure you match the SIGNATURE of POST (i.e., takes in a record, returns a Promise)
+
+// How can we specialize Products to have unique post but same get
+// AND not mess up Food and Books

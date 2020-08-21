@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 
 const mongoose = require("mongoose");
