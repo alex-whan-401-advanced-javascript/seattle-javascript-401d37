@@ -6,6 +6,8 @@ const auth = require("../../../src/auth/basic-auth-middleware.js");
 const User = require("../../../src/auth/users-model.js");
 
 beforeAll(async () => {
+    // Making this "admin data" available for everyone "beforeAll/beforeEach"
+    // Could also just put this object/data IN each test
     const adminUserData = {
         username: "admin",
         password: "password",
@@ -15,7 +17,7 @@ beforeAll(async () => {
     await User(adminUserData).save();
 });
 
-describe.skip("user authentication", () => {
+describe("user authentication", () => {
     let errorObject = {
         message: "Invalid User ID/Password",
         status: 401,
@@ -26,6 +28,7 @@ describe.skip("user authentication", () => {
         // admin:foo: YWRtaW46Zm9v
 
         let req = {
+            // supplying credentials for text
             headers: {
                 authorization: "Basic YWRtaW46Zm9v",
             },
@@ -33,11 +36,11 @@ describe.skip("user authentication", () => {
 
         let res = {};
 
-        let next = jest.fn();
+        let next = jest.fn(); // using Jest to set up a special kind of function that will report on "how it was used and in what ways", basically
 
         await auth(req, res, next);
 
-        expect(next).toHaveBeenCalledWith(errorObject);
+        expect(next).toHaveBeenCalledWith(errorObject); // this is how we defined "what it means for this to work" - needs to have the exact/particular error object above
     });
 
     it("logs in an admin user with the right credentials", async () => {

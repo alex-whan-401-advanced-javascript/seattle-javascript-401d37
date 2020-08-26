@@ -4,18 +4,24 @@ require("dotenv").config();
 
 const jwt = require("jsonwebtoken");
 
-const server = require("../../../src/app.js").server;
+const { server } = require("../../../src/app.js");
+
+// Alternatively:
+// const server = require("../../../src/app.js").server;
+
 const supergoose = require("@code-fellows/supergoose");
 
 const mockRequest = supergoose(server);
 
 let users = {
+    // We do need to make sure we have different TYPES of users
+    // It'll run these checks for each of these TYPES of users (3 user types x 2 tests each)
     admin: { username: "admin", password: "password", role: "admin" },
     editor: { username: "editor", password: "password", role: "editor" },
     user: { username: "user", password: "password", role: "user" },
 };
 
-describe.skip("Auth Router", () => {
+describe("Auth Router", () => {
     Object.keys(users).forEach((userType) => {
         describe(`${userType} users`, () => {
             let id;
@@ -25,14 +31,18 @@ describe.skip("Auth Router", () => {
                     .post("/signup")
                     .send(users[userType]);
 
+                expect(results.body.user).toBeDefined();
+                expect(results.body.token).toBeDefined();
+
                 const token = jwt.verify(
                     results.body.token,
                     process.env.JWT_SECRET
                 );
 
-                id = token.id;
+                // id = token._id;
+                // expect(token.id).toBeDefined();
 
-                expect(token.id).toBeDefined();
+                expect(token.role).toBe(userType);
             });
 
             it("can signin with basic", async () => {
