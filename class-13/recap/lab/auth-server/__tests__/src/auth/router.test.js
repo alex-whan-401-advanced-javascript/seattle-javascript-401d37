@@ -39,8 +39,8 @@ describe("Auth Router", () => {
                     process.env.JWT_SECRET
                 );
 
-                // id = token._id;
-                // expect(token.id).toBeDefined();
+                id = token._id;
+                expect(token.id).toBeDefined();
 
                 expect(token.role).toBe(userType);
             });
@@ -57,8 +57,10 @@ describe("Auth Router", () => {
                     results.body.token,
                     process.env.JWT_SECRET
                 );
+                console.log("RESULTS?????", token);
 
-                expect(token.id).toEqual(id);
+                id = token.id;
+                expect(token.id).toBe(id);
 
                 expect(token.role).toBe(userType);
             });

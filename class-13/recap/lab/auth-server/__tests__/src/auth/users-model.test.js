@@ -60,7 +60,7 @@ it("should return null when password bad", async () => {
 it("should generate a token", async () => {
     const user = await new User(fakeUser).save();
     const token = await user.generateToken();
-    console.log("TOKEN ******", token);
+    // console.log("TOKEN ******", token);
     expect(token).toBeDefined();
     const verifiedToken = jwt.verify(token, process.env.JWT_SECRET);
     expect(verifiedToken.role).toBe(user.role);

@@ -22,12 +22,14 @@ authRouter.post("/signup", async (req, res, next) => {
     res.send(responseBody);
 });
 
-authRouter.post("/signin", auth, (req, res, next) => {
+authRouter.post("/signin", auth, async (req, res, next) => {
     res.cookie("auth", req.token); // request put here by auth middleware
     res.set("token", req.token); // set a token header
 
+    // console.log(" ****** REQ TOKEN???????", await req.token);
+
     res.send({
-        token: req.token,
+        token: await req.token,
         user: req.user,
     });
 });

@@ -58,7 +58,7 @@ users.methods.generateToken = async function () {
     // Should you have role in this payload all the time? Or just now to pass the test? Answer: We're going to need it in the near future where we're going to be having different KINDS of users. Those different KINDS of users will have different ROLES that give them different levels of ACCESS into your app. Having a role with your token is important to that strategy.
     const payload = {
         // Don't HAVE to have this ID
-        // id: this._id,
+        id: this._id,
         role: this.role,
     };
 
