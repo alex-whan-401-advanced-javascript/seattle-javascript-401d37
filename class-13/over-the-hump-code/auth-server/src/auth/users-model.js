@@ -13,13 +13,13 @@ const users = new mongoose.Schema({
   role: { type: String, default: 'user', enum: ['admin', 'editor', 'user'] },
 });
 
-users.pre('save', async function() {
-  if(this.isModified('password')) {
+users.pre('save', async function () {
+  if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
 
-users.statics.authenticateBasic = async function(username, password) {
+users.statics.authenticateBasic = async function (username, password) {
   const user = await this.findOne({ username });
 
   return user && await user.comparePassword(password);
@@ -50,14 +50,51 @@ users.statics.createFromOauth = function (username) {
 
 };
 
-/* Lab 13 new methods start */
-users.methods.generateToken = function (type) {
 
+
+/* Lab 13 - Modified Method */
+// You might handle this differently BUT tests assume this style
+// AND provided OAUTH example assumes it
+
+users.methods.generateToken = function () {
+
+  let token = {
+    id: this._id,
+    role: this.role,
+  };
+
+  let options = {};
+
+  // /* Additional Security Measure */
+  // if (!!TOKEN_EXPIRE) {
+  //   options = { expiresIn: TOKEN_EXPIRE };
+  // }
+
+  return jwt.sign(token, SECRET, options);
 };
+
+/* Lab 13 new methods start */
+
 
 users.statics.authenticateToken = function (token) {
 
+  /* Additional Security Measure */
+  // if (usedTokens.has(token)) {
+  //   return Promise.reject('Invalid Token');
+  // }
+
+  let parsedToken = jwt.verify(token, SECRET);
+
+  /* Additional Security Measure */
+  // Add to the scrap heap if we are in "one use token mode"
+  // if(SINGLE_USE_TOKENS) {
+  //   usedTokens.add(token);
+  // }
+
+  return this.findById(parsedToken.id);
+
 };
+
 
 /* Lab 13 end */
 

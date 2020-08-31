@@ -1,7 +1,5 @@
 'use strict';
 
-/* Lab 13 */
-
 const User = require('../users-model');
 
 module.exports = async (req, res, next) => {
@@ -20,6 +18,14 @@ module.exports = async (req, res, next) => {
     const validUser = await User.authenticateToken(token);
 
     req.user = validUser;
+
+    /* Lab 14 - add capabilities key/value pair */
+    req.user = {
+      username: validUser.username,
+      fullname: validUser.fullname,
+      email: validUser.email,
+      capabilities: validUser.capabilities,
+    };
 
     next();
 

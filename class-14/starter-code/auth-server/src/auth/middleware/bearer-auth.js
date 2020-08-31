@@ -1,7 +1,5 @@
 'use strict';
 
-/* Lab 13 */
-
 const User = require('../users-model');
 
 module.exports = async (req, res, next) => {
@@ -20,6 +18,17 @@ module.exports = async (req, res, next) => {
     const validUser = await User.authenticateToken(token);
 
     req.user = validUser;
+
+    /* Lab 14 TODO
+       add capabilities key/value pair
+       Refer to todo-bearer-auth.js for tips
+    */
+    req.user = {
+      username: validUser.username,
+      fullname: validUser.fullname,
+      email: validUser.email,
+      capabilities: ['REPLACE THIS ARRAY'],
+    };
 
     next();
 
