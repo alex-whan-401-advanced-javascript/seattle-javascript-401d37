@@ -3,10 +3,10 @@ const io = require('socket.io-client');
 
 const emergencyChannel = io.connect('http://localhost:3000/emergency');
 
-emergencyChannel.emit('join', 'policeDepartment');
+emergencyChannel.emit('join', 'paramedic');
 
-emergencyChannel.on('crime', (payload) => {
-  console.log('911 ... here we come!');
+emergencyChannel.on('accident', (payload) => {
+  console.log('Paramedics on the way!');
 });
 
 

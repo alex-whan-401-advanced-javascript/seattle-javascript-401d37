@@ -1,13 +1,12 @@
 'use strict';
 
-const io = require('socket.io')(3000);
+const io = require('socket.io')(process.env.PORT || 3000);
 
-// Core Demo -- basic operations on the main socket interface
-// Couple this with the "day.js" client
 io.on('connection', (socket) => {
   console.log('CONNECTED', socket.id);
 
   socket.on('sunrise', (payload) => {
+    console.log('received sunrise message', payload);
     io.emit('sunrise', payload);
   });
 
@@ -36,10 +35,10 @@ weather.on('connection', (socket) => {
 
 
 // Build last, to show namespaces and rooms
-// Couple this with the fire.js and police.js clients
+// Couple this with the fire.js and paramedic.js clients
 const emergency = io.of('/emergency');
 
-// Assume we have 2 rooms that we care about clients joining: police and fire
+// Assume we have 2 rooms that we care about clients joining: paramedic and fire
 emergency.on('connection', (socket) => {
 
   console.log('EMERGENCY CHANNEL', socket.id);
@@ -50,8 +49,8 @@ emergency.on('connection', (socket) => {
     socket.join(room);
   });
 
-  socket.on('crime', (payload) => {
-    emergency.to('policeDepartment').emit('crime', payload);
+  socket.on('accident', (payload) => {
+    emergency.to('paramedic').emit('accident', payload);
   });
 
   socket.on('fire', (payload) => {
@@ -59,4 +58,4 @@ emergency.on('connection', (socket) => {
   });
 
 });
-
+*/
