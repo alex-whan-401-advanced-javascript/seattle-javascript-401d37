@@ -17,6 +17,8 @@ class Form extends React.Component {
     let data = await raw.json();
     // At this point, we have our data
 
+    // fetch done
+
     let count = data.count;
 
     // REDUCE will go through and reduce and array down to a different form

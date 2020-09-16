@@ -6,19 +6,21 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: 0,
+      num: 0,
     };
   }
 
-  handleNewNumber = (number) => {
-    this.setState({ number });
+  numChangeHandler = (num) => {
+    this.setState({ num });
   };
 
   render() {
     return (
       <>
-        <Number show={this.state.number} />
-        <NumberForm updateNumber={this.handleNewNumber} />
+        <h1>Number Fun</h1>
+        <Number num={this.state.num} otherProp="otherThing" />
+        <h3>Playing around {this.state.num}</h3>
+        <NumberForm onNumChange={this.numChangeHandler} />
       </>
     );
   }

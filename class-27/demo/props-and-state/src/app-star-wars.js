@@ -1,4 +1,5 @@
 import React from "react";
+import JSONPretty from "react-json-pretty";
 
 import Form from "./form.js";
 import People from "./people.js";
