@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const net = require('net');
+const net = require("net");
 
 const port = process.env.PORT || 3000;
 const server = net.createServer();
@@ -10,24 +10,27 @@ server.listen(port, () => console.log(`Server up on ${port}`));
 // Create a list of clients that have connected to us.
 let socketPool = {};
 
-server.on('connection', (socket) => {
+server.on("connection", (socket) => {
   // Give each client a unique ID number
   const id = `Socket-${Math.random()}`;
   // Add them to the list (we're goign to need this later...)
   socketPool[id] = socket;
 
   // Here's what we do when events come in
-  socket.on('data', (buffer) => dispatchEvent(buffer));
+  socket.on("data", (buffer) => dispatchEvent(buffer));
   // Note that this is the same as the above ... how does that work in Javascript?
   // socket.on('data', dispatchEvent);
 
-  socket.on('error', (e) => { console.log('SOCKET ERROR', e); });
-  socket.on('end', (e) => { delete socketPool[id]; });
-
+  socket.on("error", (e) => {
+    console.log("SOCKET ERROR", e);
+  });
+  socket.on("end", (e) => {
+    delete socketPool[id];
+  });
 });
 
-server.on('error', (e) => {
-  console.error('SERVER ERROR', e.message);
+server.on("error", (e) => {
+  console.error("SERVER ERROR", e.message);
 });
 
 function dispatchEvent(buffer) {
@@ -44,8 +47,6 @@ function broadcast(message) {
   // We can use those to handle every event type and payload differently, if we choose
   let payload = JSON.stringify(message);
   for (let socket in socketPool) {
-    socketPool[socket].write(payload)
+    socketPool[socket].write(payload);
   }
 }
-
-

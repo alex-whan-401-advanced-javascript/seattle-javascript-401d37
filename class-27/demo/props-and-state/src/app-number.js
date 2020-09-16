@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import './styles.scss';
+import "./styles.scss";
 
 class App extends React.Component {
   constructor(props) {
@@ -25,27 +25,29 @@ class App extends React.Component {
 }
 
 function Number(props) {
-  return (
-    <h1 data-testid="output">{props.show}</h1>
-  )
+  return <h1 data-testid="output">{props.show}</h1>;
 }
 
 function NumberForm(props) {
-
   const _handleSubmit = (e) => {
     e.preventDefault();
     e.target.reset();
-  }
+  };
 
   const _handleChange = (e) => {
     props.updateNumber(e.target.value);
-  }
+  };
 
   return (
     <form onSubmit={_handleSubmit}>
-      <input data-testid="num" type="number" onChange={_handleChange} placeholder="0" />
+      <input
+        data-testid="num"
+        type="number"
+        onChange={_handleChange}
+        placeholder="0"
+      />
     </form>
-  )
+  );
 }
 
 export default App;

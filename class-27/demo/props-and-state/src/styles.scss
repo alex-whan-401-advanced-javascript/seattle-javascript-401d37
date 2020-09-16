@@ -1,25 +1,29 @@
 body {
-    background: #e0e0e0;
+  background: #e0e0e0;
 
-    form {
-        input {
-            background: #f5f5f5;
-            border: none;
-            border-bottom: 1px solid #000;
-            font-size: 1.1em;
-            margin: 1em 0;
-            outline: none;
-            padding: .25em;
-            transition: all 400ms ease-out;
-        }
-
-        input:focus {
-            background: #fff;
-            border-bottom: 2px solid blue;
-        }
+  form {
+    input {
+      background: #f5f5f5;
+      border: none;
+      border-bottom: 1px solid #000;
+      font-size: 1.1em;
+      margin: 1em 0;
+      outline: none;
+      padding: 0.25em;
+      transition: all 400ms ease-out;
     }
 
-    div {
-        margin: 1em;
+    input:focus {
+      background: #fff;
+      border-bottom: 2px solid blue;
     }
+  }
+
+  div {
+    margin: 1em;
+  }
+
+  .loading-true {
+    border: 2px solid red;
+  }
 }

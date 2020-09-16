@@ -1,10 +1,10 @@
 let state = {};
 
-let button = document.getElementById('clicker');
-button.addEventListener('click', handleClick);
+let button = document.getElementById("clicker");
+button.addEventListener("click", handleClick);
 
-let input = document.getElementById('wordsInput');
-input.addEventListener('change', handleWords);
+let input = document.getElementById("wordsInput");
+input.addEventListener("change", handleWords);
 
 function handleWords(e) {
   state.words = e.target.value;
@@ -12,22 +12,19 @@ function handleWords(e) {
 
 function handleClick(event) {
   event.preventDefault();
-  state.words = state.words
-    .split('')
-    .reverse()
-    .join('');
+  state.words = state.words.split("").reverse().join("");
 
   render();
 }
 
 function init() {
   state.clicks = 0;
-  state.words = 'nothing to see here';
+  state.words = "nothing to see here";
   render();
 }
 
 function render() {
-  document.getElementById('words').textContent = state.words;
+  document.getElementById("words").textContent = state.words;
 }
 
 init();
