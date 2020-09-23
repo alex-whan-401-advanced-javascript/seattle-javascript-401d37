@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 
 import { PotatoContext } from '../context/potato.js';
 
-
-export default function PotatoStatus() {
+function PotatoCooker() {
 
   const potatoContext = useContext(PotatoContext);
 
   return (
-    <h2>Potato Status: {potatoContext.status}</h2>
+    <p>I will soon transform potato that is {potatoContext.status} into a feast</p>
   )
-
 }
+
+export default PotatoCooker

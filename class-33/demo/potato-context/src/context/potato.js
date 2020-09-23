@@ -4,17 +4,20 @@ export const PotatoContext = React.createContext();
 
 function PotatoProvider(props) {
 
+  const statii = ['raw','fried','baked','salad'];
+
   const [status, setStatus] = useState('raw');
 
+
   const cycleStatus = () => {
-    const statii = ['raw','fried','baked','salad'];
 
     const curIndex = statii.indexOf(status);
 
-    const nextIndex = (curIndex + 1) % statii.length;
+    const newIndex = (curIndex + 1) % statii.length;
 
-    setStatus(statii[nextIndex]);
-  }
+    setStatus(statii[newIndex]);
+
+  };
 
   const state = {
     status,
