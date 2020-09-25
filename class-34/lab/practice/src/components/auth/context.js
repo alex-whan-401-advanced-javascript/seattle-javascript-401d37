@@ -1,14 +1,9 @@
 import React from 'react';
 import cookie from 'react-cookies';
 import jwt from 'jsonwebtoken';
+import axios from 'axios';
 
 const API = process.env.REACT_APP_API;
-
-const testLogins = {
-  testAdmin: process.env.REACT_APP_ADMIN_TOKEN || '',
-  testEditor: process.env.REACT_APP_EDITOR_TOKEN || '',
-  testUser: process.env.REACT_APP_USER_TOKEN || '',
-};
 
 export const LoginContext = React.createContext();
 
@@ -19,33 +14,25 @@ class LoginProvider extends React.Component {
       loggedIn: false,
       login: this.login,
       logout: this.logout,
+      can: this.can,
       user: {},
     };
   }
 
+  can = (capability) => {
+    return this.state.user?.capabilities?.includes(capability);
+  }
+
   login = (username, password) => {
-    // This is foul and unsafe ... but when working offline / testmode ess oh kay
-    if (testLogins[username]) {
-      this.validateToken(testLogins[username]);
-    }
-    else {
-      fetch(`${API}/signin`, {
-        method: 'post',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: new Headers({
-          'Authorization': `Basic ${btoa(`${username}:${password}`)}`,
-        }),
-      })
-        .then(response => response.text())
-        .then(token => this.validateToken(token))
-        .catch(console.error);
-    }
+    const auth = {username, password};
+    axios.post(`${API}/signin`, {}, {auth})
+      .then(response => this.validateToken(response?.data?.token))
+      .catch(console.error);
   }
 
   validateToken = token => {
     try {
-      let user = jwt.verify(token, process.env.REACT_APP_SECRET);
+      const user = jwt.verify(token, process.env.REACT_APP_SECRET);
       this.setLoginState(true, token, user);
     }
     catch (e) {
